@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فێربوونی پایتۆن</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Font (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* بەکارهێنانی فۆنتی Inter وەک بنەڕەت */
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        /* ستایلی تایبەت بۆ کۆدەکان */
+        pre {
+            background-color: #2d3748; /* bg-gray-800 */
+            color: #e2e8f0; /* text-gray-200 */
+            padding: 1rem;
+            border-radius: 0.5rem; /* rounded-lg */
+            overflow-x: auto;
+            direction: ltr; /* کۆد هەمیشە چەپ بۆ ڕاستە */
+            font-family: 'Courier New', Courier, monospace;
+        }
+        code {
+            font-family: 'Courier New', Courier, monospace;
+        }
+        /* شاردنەوەی سکڕۆڵبار بۆ سایبار لەسەر دیسکتۆپ */
+        @media (min-width: 1024px) {
+            #sidebar::-webkit-scrollbar {
+                display: none;
+            }
+            #sidebar {
+                -ms-overflow-style: none;  /* IE and Edge */
+                scrollbar-width: none;  /* Firefox */
+            }
+        }
+        
+        /* ستایل بۆ جوانکاری زیاتر */
+        .content-section h2 {
+            border-bottom: 2px solid #cbd5e0; /* border-gray-300 */
+            padding-bottom: 0.5rem; /* pb-2 */
+        }
+        .content-section h3 {
+            color: #2d3748; /* text-gray-800 */
+            margin-top: 1.5rem; /* mt-6 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Header (بۆ مۆبایل) -->
+    <header class="bg-gray-900 text-white p-4 lg:hidden flex justify-between items-center fixed top-0 right-0 left-0 z-20">
+        <h1 class="text-xl font-bold">فێربوونی پایتۆن</h1>
+        <button id="menu-toggle" class="text-white focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+        </button>
+    </header>
+
+    <div class="flex">
+        <!-- Sidebar (لیستی وانەکان) -->
+        <aside id="sidebar" class="bg-gray-900 text-white w-64 h-screen fixed top-0 right-0 overflow-y-auto z-10 
+                                 transform translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out
+                                 lg:pt-0 pt-16">
+            <div class="p-5 border-b border-gray-700 hidden lg:block">
+                <h2 class="text-2xl font-bold">فێربوونی پایتۆن</h2>
+            </div>
+            <nav class="py-4">
+                <ul id="topic-list">
+                    <!-- لیستی وانەکان لێرەدا دادەنرێت -->
+                    <li><a href="#" class="sidebar-link active-link" data-topic="topic-1">1. پێشەکییەک بۆ پایتۆن</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-2">2. دامەزراندنی پایتۆن</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-3">3. جێبەجێکردنی پرۆگرامەکانی پایتۆن</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-4">4. پایتۆن 2 بەرامبەر پایتۆن 3</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-5">5. بنەماکانی کارکردن لەگەڵ پایتۆن</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-5.1">5.1. گۆڕاو (Variable)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-5.2">5.2. دەربڕین و ستەیتمێنت</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-5.3">5.3. کۆمێنت (Comment)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-5.4">5.4. بۆشایی (Indentation)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-6">6. جۆرەکانی داتا (Data Types)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-7">7. کردارەکان (Operators)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-7.0.1">7.0.1. کرداری دانان (Assignment)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-7.0.2">7.0.2. کرداری ژمێریاری (Arithmetic)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-7.0.3">7.0.3. کرداری بەراوردکاری (Comparison)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-7.0.4">7.0.4. کرداری لۆجیکی (Boolean)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-7.0.5">7.0.5. کرداری Bitwise</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-7.0.6">7.0.6. is و in</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-8">8. کرداری سێیانی (Ternary Operator)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-9">9. ستริงەکان (Strings)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-10">10. بووڵیەنەکان (Booleans)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-11">11. ژمارەکان (Numbers)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-11.0.1">11.0.1. ژمارەی تەواو (Integer)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-11.0.2">11.0.2. ژمارەی خاڵدار (Floating point)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-11.0.3">11.0.3. ژمارەی ئاڵۆز (Complex)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-11.0.4">11.0.4. کردارە ژمێریارییەکان لەسەر ژمارە</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-11.0.5">11.0.5. فانکشنی ئامادەکراو (Built-in)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-12">12. نەگۆڕەکان (Constants)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-13">13. Enums</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-14">14. وەرگرتنی زانیاری لە بەکارهێنەر (User Input)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-15">15. ڕستەکانی کۆنترۆڵ (Control Statements)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-16">16. لیستەکان (Lists)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-17">17. تاپڵەکان (Tuples)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-18">18. فەرهەنگەکان (Dictionaries)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-19">19. سێتەکان (Sets)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-20">20. فانکشنەکان (Functions)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-21">21. ئۆبجێکتەکان (Objects)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-22">22. بازنەکان (Loops)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-22.1">22.1. بازنەی while</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-22.2">22.2. بازنەی for</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-22.3">22.3. Break و Continue</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-23">23. کلاسەکان (Classes)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-24">24. مۆدیولەکان (Modules)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-25">25. کتێبخانەی ستانداردی پایتۆن</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-26">26. ڕێبەری ستایلی PEP8</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-27">27. هەڵەدۆزینەوە (Debugging)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-28">28. مەودای گۆڕاوەکان (Variables scope)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-29">29. وەرگرتنی ئارگیومێنت لە command line</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-30">30. لامبدا فانکشن (Lambda Functions)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-31">31. Recursion</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-32">32. Nested Functions</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-33">33. Closures</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-34">34. Decorators</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-35">35. Docstrings</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-36">36. Introspection</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-37">37. Annotations</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-38">38. هەڵەکان (Exceptions)</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-39">39. ستەیتمێنتی with</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-40">40. دامەزراندنی پاکێجی دەرەکی بە pip</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-41">41. List comprehensions</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-42">42. Polymorphism</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-43">43. Operator Overloading</a></li>
+                    <li><a href="#" class="sidebar-link" data-topic="topic-44">44. ژینگەی خەیاڵی (Virtual Environments)</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content (ناوەڕۆکی وانەکان) -->
+        <main id="main-content" class="flex-1 p-8 lg:mr-64 pt-20 lg:pt-8">
+            
+            <!-- وانەی یەکەم -->
+            <section id="topic-1" class="content-section">
+                <h2 class="text-3xl font-bold mb-5">1. پێشەکییەک بۆ پایتۆن</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    پایتۆن زمانێکی پرۆگرامسازی ئاست-بەرز، لێکدراوە (interpreted)، و فرە-مەبەستە. لەلایەن گویدۆ ڤان ڕۆسەمەوە دروستکراوە و یەکەمجار لە ساڵی 1991 بڵاوکرایەوە. فەلسەفەی دیزاینی پایتۆن جەخت لەسەر خوێندنەوەی ئاسانی کۆد دەکاتەوە، بە بەکارهێنانی بۆشایی سپی (whitespace)ی بەرچاو.
+                </p>
+                <p class="mb-4 text-lg leading-relaxed">
+                    بۆچی پایتۆن؟
+                </p>
+                <ul class="list-disc list-inside mb-4 text-lg leading-relaxed space-y-2">
+                    <li><b>ئاسان بۆ فێربوون:</b> سینتاکسەکەی (syntax) نزیکە لە زمانی ئینگلیزی، ئەمەش وایکردووە بۆ سەرەتاکاران زۆر گونجاو بێت.</li>
+                    <li><b>فرە-پلاتفۆرم:</b> لەسەر ویندۆز، ماک، لینوکس، و سیستەمەکانی تر کاردەکات.</li>
+                    <li><b>کۆمەڵگەی گەورە:</b> خاوەنی کۆمەڵگەیەکی گەورە و چالاکی گەشەپێدەرانە، کە ئەمەش واتای بوونی کتێبخانە (libraries) و چوارچێوەی (frameworks) زۆرە.</li>
+                    <li><b>فرە-مەبەست:</b> بۆ گەشەپێدانی وێب، زانستی داتا، زیرەکی دەستکرد، ئۆتۆمەیشن، و زۆری تر بەکاردێت.</li>
+                </ul>
+            </section>
+
+            <!-- وانەی دووەم -->
+            <section id="topic-2" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">2. دامەزراندنی پایتۆن</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    بۆ دەستپێکردن، پێویستە پایتۆن لەسەر کۆمپیوتەرەکەت دابمەزرێنیت.
+                </p>
+                <ol class="list-decimal list-inside mb-4 text-lg leading-relaxed space-y-2">
+                    <li>سەردانی ماڵپەڕی فەرمی پایتۆن بکە: <a href="https://www.python.org/downloads/" target="_blank" class="text-blue-600 hover:underline">python.org/downloads</a></li>
+                    <li>نوێترین وەشانی پایتۆن (بۆ نموونە Python 3.11 یان نوێتر) دابگرە.</li>
+                    <li>لەکاتی دامەزراندن لەسەر ویندۆز، دڵنیابە کە نیشانەی <b>"Add Python to PATH"</b> چالاک دەکەیت. ئەمە زۆر گرنگە بۆ ئەوەی بتوانیت پایتۆن لە (Command Prompt)ەوە بەکاربهێنیت.</li>
+                    <li>بۆ دڵنیابوونەوە لەوەی کە بە سەرکەوتوویی دامەزراوە، (Command Prompt) یان (Terminal) بکەرەوە و بنووسە:</li>
+                </ol>
+                <pre><code class="language-bash">python --version</code></pre>
+                <p class="mt-4 text-lg leading-relaxed">
+                    یان ئەگەر لەسەر ماک یان لینوکس بیت، ڕەنگە پێویست بکات بنووسیت:
+                </p>
+                <pre><code class="language-bash">python3 --version</code></pre>
+            </section>
+
+            <!-- وانەی سێیەم -->
+            <section id="topic-3" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">3. جێبەجێکردنی پرۆگرامەکانی پایتۆن</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    دوو ڕێگەی سەرەکی هەیە بۆ جێبەجێکردنی کۆدی پایتۆن:
+                </p>
+                <h3 class="text-2xl font-semibold mb-3">أ. دۆخی کارلێککار (Interactive Mode - REPL)</h3>
+                <p class="mb-4 text-lg leading-relaxed">
+                    تەنها (Terminal) یان (CMD) بکەرەوە و بنووسە <code>python</code> (یان <code>python3</code>) و Enter دابگرە. ئەمە دەتەوێتە ناو شێڵ (shell)ی پایتۆن، کە دەتوانیت کۆد دێڕ بە دێڕ بنووسیت و ئەنجامەکەی ڕاستەوخۆ ببینیت.
+                </p>
+                <pre><code class="language-python">>>> print("سڵاو، جیهان!")
+سڵاو، جیهان!
+>>> 2 + 3
+5</code></pre>
+                <p class="mb-4 text-lg leading-relaxed">
+                    بۆ دەرچوون لەم دۆخە، بنووسە <code>exit()</code>.
+                </p>
+                
+                <h3 class="text-2xl font-semibold mb-3">ب. دۆخی سکریپت (Script Mode)</h3>
+                <p class="mb-4 text-lg leading-relaxed">
+                    دەتوانیت کۆدەکانت لەناو فایلێکدا هەڵبگریت کە پاشگری <code>.py</code> هەیە (بۆ نموونە <code>my_program.py</code>). پاشان فایلەکە لە ڕێگەی تێرمیناڵەوە جێبەجێ بکەیت.
+                </p>
+                <p class="mb-2 text-lg">فایلی <code>my_program.py</code>:</p>
+                <pre><code class="language-python"># This is my first Python program
+name = "ئاریا"
+print(f"سڵاو، {name}!")</code></pre>
+                <p class="mb-2 mt-4 text-lg">بۆ جێبەجێکردنی لە تێرمیناڵ:</p>
+                <pre><code class="language-bash">python my_program.py</code></pre>
+                <p class="mb-2 mt-4 text-lg">ئەنجام:</p>
+                <pre><code class="language-bash">سڵاو، ئاریا!</code></pre>
+            </section>
+
+            <!-- وانەی 5.1 -->
+            <section id="topic-5.1" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">5.1. گۆڕاو (Variable)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    گۆڕاوەکان وەکو دەفر یان کۆنتەینەر وان بۆ هەڵگرتنی بەهاکانی داتا. لە پایتۆندا، پێویست ناکات جۆری گۆڕاوەکە پێشوەختە دیاری بکەیت. تەنها ناوێک و بەهایەکی پێدەدەیت.
+                </p>
+                <pre><code class="language-python"># x گۆڕاوێکە کە ژمارەی تەواو (integer) هەڵدەگرێت
+x = 10
+
+# name گۆڕاوێکە کە ستริง (string) هەڵدەگرێت
+name = "هێمن"
+
+# pi گۆڕاوێکە کە ژمارەی خاڵدار (float) هەڵدەگرێت
+pi = 3.14
+
+# is_student گۆڕاوێکە کە بووڵیەن (boolean) هەڵدەگرێت
+is_student = True
+
+print(x)
+print(name)</code></pre>
+                <h3 class="text-2xl font-semibold my-4">یاساکانی ناونانی گۆڕاو</h3>
+                <ul class="list-disc list-inside mb-4 text-lg leading-relaxed space-y-2">
+                    <li>پێویستە بە پیت یان هێمای ژێرەوە (_) دەست پێبکات.</li>
+                    <li>ناتوانێت بە ژمارە دەست پێبکات.</li>
+                    <li>تەنها دەتوانێت پیت (a-z, A-Z)، ژمارە (0-9)، و هێمای ژێرەوە (_) لەخۆبگرێت.</li>
+                    <li>ناوەکان هەستیارن بە پیتی گەورە و بچووک (<code>age</code> جیاوازە لە <code>Age</code>).</li>
+                </ul>
+            </section>
+
+            <!-- ... ناوەڕۆکی وانەکانی تر ... -->
+
+            <section id="topic-4" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">4. پایتۆن 2 بەرامبەر پایتۆن 3</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    دوو وەشانی سەرەکی پایتۆن هەبوون: پایتۆن 2 و پایتۆن 3.
+                </p>
+                <p class="mb-4 text-lg leading-relaxed">
+                    <b>پایتۆن 2:</b> وەشانی کۆنترە. پشتگیری فەرمی بۆ پایتۆن 2 لە 1ی کانوونی دووەمی 2020 کۆتایی هات. نابێت هیچ پڕۆژەیەکی نوێ بە پایتۆن 2 دەست پێبکەیت.
+                </p>
+                <p class="mb-4 text-lg leading-relaxed">
+                    <b>پایتۆن 3:</b> وەشانی ئێستا و داهاتووی پایتۆنە. هەموو کتێبخانە و ئامرازە نوێیەکان پشتگیری پایتۆن 3 دەکەن. ئەم فێرکارییە بە تەواوی لەسەر پایتۆن 3 دەبێت.
+                </p>
+                <p class="mb-4 text-lg leading-relaxed">
+                    هەندێک جیاوازی سەرەکی (بۆ نموونە):
+                </p>
+                <pre><code class="language-python"># Python 2
+print "Hello"
+
+# Python 3
+print("Hello")</code></pre>
+            </section>
+            
+            <section id="topic-5" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">5. بنەماکانی کارکردن لەگەڵ پایتۆن</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    لەم بەشەدا، چەند چەمکێکی بنەڕەتی دەبینین کە بناغەی پرۆگرامسازی پایتۆنن.
+                </p>
+            </section>
+            
+            <section id="topic-5.2" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">5.2. دەربڕین و ستەیتمێنت (Expressions and Statements)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    <b>دەربڕین (Expression):</b> پارچە کۆدێکە کە ئەنجامێکی (بەهایەکی) هەیە. بۆ نموونە <code>2 + 3</code> دەربڕینێکە کە ئەنجامەکەی <code>5</code>.
+                </p>
+                <p class="mb-4 text-lg leading-relaxed">
+                    <b>ستەیتمێنت (Statement):</b> کردارێک یان فرمانێکە کە پایتۆن جێبەجێی دەکات. بۆ نموونە <code>x = 5</code> ستەیتمێنتێکە کە بەهای <code>5</code> دەداتە پاڵ گۆڕاوی <code>x</code>.
+                </p>
+                <pre><code class="language-python"># 10 + 5 دەربڕینە
+x = 10 + 5  # x = 15 ستەیتمێنتە
+
+print(x)    # print(x) ستەیتمێنتە</code></pre>
+            </section>
+            
+            <section id="topic-5.3" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">5.3. کۆمێنت (Comment)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    کۆمێنتەکان بۆ ڕوونکردنەوەی کۆدەکان بەکاردێن و لەلایەن پایتۆنەوە جێبەجێ ناکرێن.
+                </p>
+                <pre><code class="language-python"># ئەمە کۆمێنتێکی یەک-دێڕییە
+print("سڵاو!")  # ئەم کۆمێنتە لە کۆتایی دێڕەکەیە
+
+"""
+ئەمە کۆمێنتێکی
+فرە-دێڕییە
+کە زۆرجار وەک docstring بەکاردێت
+"""
+print("کۆمێنتەکان گرنگن")</code></pre>
+            </section>
+            
+            <section id="topic-5.4" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">5.4. بۆشایی (Indentation)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    لە پایتۆندا، بۆشایی (زۆربەی کات 4 سپەیس) زۆر گرنگە. لەبری بەکارهێنانی کەوانەی <code>{}</code>، پایتۆن بۆشایی بەکاردەهێنێت بۆ دیاریکردنی بلۆکی کۆدەکان (بۆ نموونە ناو <code>if</code>، <code>for</code>، <code>def</code>).
+                </p>
+                <pre><code class="language-python">x = 10
+
+if x > 5:
+    print("x گەورەترە لە 5")  # ئەم دێڕە 4 سپەیسی هەیە
+    print("ئەمەش هەر لەناو بلۆکی if دایە")
+else:
+    print("x گچکەترە یان یەکسانە بە 5")
+
+print("ئەمە لە دەرەوەی بلۆکی if ە")</code></pre>
+            </section>
+            
+            <section id="topic-6" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">6. جۆرەکانی داتا (Data Types)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    پایتۆن چەندین جۆری داتای ئامادەکراوی هەیە. هەندێک لە گرنگترینیان:
+                </p>
+                <ul class="list-disc list-inside mb-4 text-lg leading-relaxed space-y-2">
+                    <li><b>جۆری دەق (Text Type):</b> <code>str</code></li>
+                    <li><b>جۆری ژمارەیی (Numeric Types):</b> <code>int</code>, <code>float</code>, <code>complex</code></li>
+                    <li><b>جۆری ڕیزبەندی (Sequence Types):</b> <code>list</code>, <code>tuple</code>, <code>range</code></li>
+                    <li><b>جۆری نەخشە (Mapping Type):</b> <code>dict</code></li>
+                    <li><b>جۆری سێت (Set Types):</b> <code>set</code>, <code>frozenset</code></li>
+                    <li><b>جۆری بووڵیەن (Boolean Type):</b> <code>bool</code></li>
+                </ul>
+                <p class="mb-4 text-lg leading-relaxed">
+                    دەتوانیت فانکشنی <code>type()</code> بەکاربهێنیت بۆ زانینی جۆری هەر گۆڕاوێک:
+                </p>
+                <pre><code class="language-python">x = 5
+y = "سڵاو"
+z = 3.14
+a = True
+b = ["a", "b"]
+
+print(type(x))  # <class 'int'>
+print(type(y))  # <class 'str'>
+print(type(z))  # <class 'float'>
+print(type(a))  # <class 'bool'>
+print(type(b))  # <class 'list'>
+</code></pre>
+            </section>
+            
+            <section id="topic-7" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">7. کردارەکان (Operators)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    کردارەکان سیمبوڵی تایبەتن کە بۆ ئەنجامدانی کردار لەسەر گۆڕاوەکان و بەهاکان بەکاردێن.
+                </p>
+            </section>
+            
+            <section id="topic-7.0.1" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">7.0.1. کرداری دانان (Assignment)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    بۆ دانانی بەها بۆ گۆڕاوەکان بەکاردێت.
+                </p>
+                <pre><code class="language-python">x = 5     # دانان
+x += 3    # یەکسانە بە: x = x + 3
+x -= 2    # یەکسانە بە: x = x - 2
+x *= 4    # یەکسانە بە: x = x * 4
+x /= 2    # یەکسانە بە: x = x / 2
+x %= 3    # یەکسانە بە: x = x % 3 (ماوە)
+x //= 2   # یەکسانە بە: x = x // 2 (دابەشکردنی تەواو)
+x **= 3   # یەکسانە بە: x = x ** 3 (توان)
+</code></pre>
+            </section>
+            
+            <section id="topic-7.0.2" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">7.0.2. کرداری ژمێریاری (Arithmetic)</h2>
+                <pre><code class="language-python">x = 10
+y = 3
+
+print(x + y)  # کۆکردنەوە (13)
+print(x - y)  # لێدەرکردن (7)
+print(x * y)  # لێکدان (30)
+print(x / y)  # دابەشکردن (3.33...)
+print(x % y)  # ماوەی دابەشکردن (1)
+print(x ** y) # توان (1000)
+print(x // y) # دابەشکردنی تەواو - بێ خاڵ (3)
+</code></pre>
+            </section>
+            
+            <section id="topic-7.0.3" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">7.0.3. کرداری بەراوردکاری (Comparison)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    ئەنجامی <code>True</code> یان <code>False</code> دەگەڕێننەوە.
+                </p>
+                <pre><code class="language-python">x = 5
+y = 8
+
+print(x == y) # یەکسانە؟ (False)
+print(x != y) # یەکسان نییە؟ (True)
+print(x > y)  # گەورەترە؟ (False)
+print(x < y)  # گچکەترە؟ (True)
+print(x >= y) # گەورەترە یان یەکسانە؟ (False)
+print(x <= y) # گچکەترە یان یەکسانە؟ (True)
+</code></pre>
+            </section>
+            
+            <section id="topic-7.0.4" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">7.0.4. کرداری لۆجیکی (Boolean)</h2>
+                <pre><code class="language-python">x = True
+y = False
+
+print(x and y) # ئەگەر هەردووکیان True بن، True دەگەڕێنێتەوە (False)
+print(x or y)  # ئەگەر یەکێکیان True بێت، True دەگەڕێنێتەوە (True)
+print(not x)   # پێچەوانەی بەهاکە دەگەڕێنێتەوە (False)
+</code></pre>
+            </section>
+            
+            <section id="topic-7.0.5" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">7.0.5. کرداری Bitwise</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    ئەم کردارانە لەسەر ئاستی بیت (binary) کاردەکەن. (بۆ ئاستی پێشکەوتوو).
+                </p>
+                <pre><code class="language-python">x = 6  # (0110)
+y = 2  # (0010)
+
+print(x & y) # AND (0010 -> 2)
+print(x | y) # OR  (0110 -> 6)
+print(x ^ y) # XOR (0100 -> 4)
+print(~x)    # NOT (-0111 -> -7)
+print(x << 1) # Shift left (1100 -> 12)
+print(x >> 1) # Shift right (0011 -> 3)
+</code></pre>
+            </section>
+            
+            <section id="topic-7.0.6" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">7.0.6. is و in</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    <b>in (Membership):</b> پشکنین دەکات ئایا بەهایەک لەناو ڕیزبەندییەکدا هەیە.
+                </p>
+                <p class="mb-4 text-lg leading-relaxed">
+                    <b>is (Identity):</b> پشکنین دەکات ئایا دوو گۆڕاو ئاماژەن بۆ *هەمان* ئۆبجێکت لە بیرگە (memory).
+                </p>
+                <pre><code class="language-python"># 'in'
+fruits = ["apple", "banana"]
+print("apple" in fruits)  # True
+print("orange" not in fruits) # True
+
+# 'is'
+x = ["a", "b"]
+y = ["a", "b"]
+z = x
+
+print(x == y) # True (چونكە بەهاکان یەکسانن)
+print(x is y) # False (چونكە دوو ئۆبجێکتی جیاوازن لە بیرگە)
+print(x is z) # True (چونكە z ئاماژەیە بۆ هەمان ئۆبجێکتی x)
+</code></pre>
+            </section>
+            
+            <section id="topic-8" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">8. کرداری سێیانی (Ternary Operator)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    ڕێگەیەکی کورتکراوەیە بۆ نووسینی ڕستەی <code>if...else</code>.
+                </p>
+                <pre><code class="language-python"># شێوازی ئاسایی
+age = 20
+if age >= 18:
+    status = "پێگەیشتوو"
+else:
+    status = "منداڵ"
+print(status)
+
+# شێوازی کرداری سێیانی
+status = "پێگەیشتوو" if age >= 18 else "منداڵ"
+print(status)
+</code></pre>
+            </section>
+            
+            <section id="topic-9" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">9. ستริงەکان (Strings)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    ڕیزێک لە پیتەکانن کە لەناو <code>' '</code> یان <code>" "</code> دادەنرێن.
+                </p>
+                <pre><code class="language-python">s = "سڵاو، جیهان!"
+
+# بڕین (Slicing)
+print(s[0])      # 'س'
+print(s[7:12])   # 'جیهان'
+
+# مێتۆدەکان
+print(s.upper())      # "سڵاو، جیهان!" (بە پیتی گەورە، ئەگەر ئینگلیزی بێت)
+print(s.lower())      # "سڵاو، جیهان!" (بە پیتی بچووک، ئەگەر ئینگلیزی بێت)
+print(len(s))         # 13 (درێژی ستริง)
+
+# f-Strings (بۆ تێکەڵکردنی گۆڕاو)
+name = "ئاکام"
+age = 25
+greeting = f"من ناوم {name}ە و تەمەنم {age} ساڵە."
+print(greeting)
+</code></pre>
+            </section>
+            
+            <section id="topic-10" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">10. بووڵیەنەکان (Booleans)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    تەنها دوو بەهایان هەیە: <code>True</code> (ڕاست) و <code>False</code> (هەڵە).
+                </p>
+                <pre><code class="language-python">is_active = True
+is_admin = False
+
+print(5 > 3)    # True
+print(10 == 20) # False
+
+if is_active:
+    print("بەکارهێنەر چالاکە")
+</code></pre>
+            </section>
+            
+            <section id="topic-11" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">11. ژمارەکان (Numbers)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    پایتۆن سێ جۆر ژمارەی سەرەکی هەیە.
+                </p>
+            </section>
+            
+            <section id="topic-11.0.1" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">11.0.1. ژمارەی تەواو (Integer)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    ژمارەی تەواون، پۆزەتیڤ یان نێگەتیڤ، بێ خاڵی دەیی.
+                </p>
+                <pre><code class="language-python">x = 10
+y = -300
+z = 123456789
+print(type(x)) # <class 'int'>
+</code></pre>
+            </section>
+            
+            <section id="topic-11.0.2" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">11.0.2. ژمارەی خاڵدار (Floating point)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    ژمارەن کە خاڵی دەییان تێدایە.
+                </p>
+                <pre><code class="language-python">x = 3.14
+y = -0.5
+z = 1.0
+print(type(x)) # <class 'float'>
+</code></pre>
+            </section>
+            
+            <section id="topic-11.0.3" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">11.0.3. ژمارەی ئاڵۆز (Complex)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    ژمارەن کە بەشی خەیاڵییان هەیە و بە <code>j</code> نیشانە دەکرێن.
+                </p>
+                <pre><code class="language-python">x = 3 + 5j
+y = -2j
+print(type(x)) # <class 'complex'>
+</code></pre>
+            </section>
+            
+            <section id="topic-11.0.4" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">11.0.4. کردارە ژمێریارییەکان لەسەر ژمارە</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    هەموو کردارە ژمێریارییەکان (کە لە بەشی 7.0.2 باسکرا) دەتوانرێت لەسەر ژمارەکان جێبەجێ بکرێن.
+                </p>
+            </section>
+            
+            <section id="topic-11.0.5" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">11.0.5. فانکشنی ئامادەکراو (Built-in)</h2>
+                <pre><code class="language-python">print(abs(-7.5))   # 7.5 (ڕەها)
+print(round(5.8))  # 6 (نزیککردنەوە)
+print(round(5.3))  # 5
+print(pow(2, 4))   # 16 (2 بە توانی 4)
+</code></pre>
+            </section>
+            
+            <section id="topic-12" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">12. نەگۆڕەکان (Constants)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    پایتۆن بە شێوەیەکی فەرمی "نەگۆڕ"ی نییە (واتە ناتوانرێت بەهای بگۆڕدرێت). بەڵام بەپێی ڕێککەوتن، پرۆگرامەران ناوی گۆڕاوە نەگۆڕەکان بە پیتی گەورە (UPPERCASE) دەنووسن بۆ ئەوەی ئاماژە بێت کە نابێت بگۆڕدرێت.
+                </p>
+                <pre><code class="language-python">PI = 3.14159
+MAX_CONNECTIONS = 10
+
+# هەرچەندە لە ڕووی تەکنیکییەوە دەتوانیت بیگۆڕیت، بەڵام نابێت بیکەیت
+# PI = 4 (نابێت بکرێت)
+</code></pre>
+            </section>
+            
+            <section id="topic-13" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">13. Enums</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    <code>Enum</code> (Enumeration) ڕێگەیەکە بۆ بەستنەوەی ناوەکان بە بەهای نەگۆڕ. پێویستە لە مۆدیولی <code>enum</code> هاوردە بکرێت.
+                </p>
+                <pre><code class="language-python">from enum import Enum
+
+class Color(Enum):
+    RED = 1
+    GREEN = 2
+    BLUE = 3
+
+print(Color.RED)      # Color.RED
+print(Color.RED.name)   # RED
+print(Color.RED.value)  # 1
+
+# ناتوانیت لە دەرەوە بیگۆڕیت
+# Color.RED = 5  # Error
+</code></pre>
+            </section>
+            
+            <section id="topic-14" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">14. وەرگرتنی زانیاری لە بەکارهێنەر (User Input)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    فانکشنی <code>input()</code> بەکاردێت بۆ وەرگرتنی داتا لە بەکارهێنەر. هەمیشە داتاکە وەک ستริง (str) دەگەڕێنێتەوە.
+                </p>
+                <pre><code class="language-python">name = input("ناوت چییە؟ ")
+print(f"سڵاو، {name}!")
+
+# پێویستە بیگۆڕیت بۆ ژمارە ئەگەر کاری ژمێریاریت پێیەتی
+age_str = input("تەمەنت چەندە؟ ")
+age_int = int(age_str) # گۆڕین بۆ int
+print(f"ساڵی داهاتوو دەبیت بە {age_int + 1} ساڵ.")
+</code></pre>
+            </section>
+            
+            <section id="topic-15" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">15. ڕستەکانی کۆنترۆڵ (Control Statements)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    بەکاردێن بۆ کۆنترۆڵکردنی ڕەوتی جێبەجێکردنی پرۆگرام. <code>if</code>, <code>elif</code> (else if), و <code>else</code>.
+                </p>
+                <pre><code class="language-python">score = 75
+
+if score >= 90:
+    print("نمرە: A")
+elif score >= 80:
+    print("نمرە: B")
+elif score >= 70:
+    print("نمرە: C")
+else:
+    print("نمرە: F")
+
+# ئەنجام: نمرە: C
+</code></pre>
+            </section>
+            
+            <section id="topic-16" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">16. لیستەکان (Lists)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    لیستەکان کۆمەڵە داتایەکی ڕیزکراو و *گۆڕاون* (mutable). بە <code>[]</code> دروست دەکرێن.
+                </p>
+                <pre><code class="language-python">fruits = ["apple", "banana", "orange"]
+
+# دەستگەیشتن
+print(fruits[0]) # "apple"
+
+# گۆڕین
+fruits[1] = "cherry"
+print(fruits) # ['apple', 'cherry', 'orange']
+
+# زیادکردن
+fruits.append("mango")
+print(fruits) # ['apple', 'cherry', 'orange', 'mango']
+
+# سڕینەوە
+fruits.pop() # 'mango' دەسڕێتەوە
+print(fruits) # ['apple', 'cherry', 'orange']
+
+# درێژی
+print(len(fruits)) # 3
+</code></pre>
+            </section>
+            
+            <section id="topic-17" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">17. تاپڵەکان (Tuples)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    تاپڵەکان کۆمەڵە داتایەکی ڕیزکراو و *نەگۆڕن* (immutable). بە <code>()</code> دروست دەکرێن.
+                </p>
+                <pre><code class="language-python">coordinates = (10, 20)
+
+# دەستگەیشتن
+print(coordinates[0]) # 10
+
+# ناتوانیت بیگۆڕیت
+# coordinates[0] = 15  # Error
+
+# بۆچی بەکاردێت؟
+# کاتێک دەتەوێت دڵنیابیت کە داتاکە ناگۆڕدرێت
+</code></pre>
+            </section>
+            
+            <section id="topic-18" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">18. فەرهەنگەکان (Dictionaries)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    کۆمەڵە داتایەکی *ڕیزنەکراو* (لە پایتۆن 3.7+ ڕیزکراون) و گۆڕاون کە بە شێوەی <code>key: value</code> کاردەکەن. بە <code>{}</code> دروست دەکرێن.
+                </p>
+                <pre><code class="language-python">person = {
+    "name": "سارا",
+    "age": 30,
+    "city": "سلێمانی"
+}
+
+# دەستگەیشتن
+print(person["name"]) # "سارا"
+print(person.get("age")) # 30
+
+# گۆڕین
+person["age"] = 31
+
+# زیادکردن
+person["email"] = "sara@email.com"
+
+# سڕینەوە
+person.pop("city")
+
+print(person)
+# {'name': 'سارا', 'age': 31, 'email': 'sara@email.com'}
+</code></pre>
+            </section>
+            
+            <section id="topic-19" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">19. سێتەکان (Sets)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    کۆمەڵە داتایەکی ڕیزنەکراو و *نا-دووبارەن* (unique elements). بە <code>{}</code> یان <code>set()</code> دروست دەکرێن.
+                </p>
+                <pre><code class="language-python">numbers = {1, 2, 3, 4, 4, 5, 2}
+print(numbers) # {1, 2, 3, 4, 5} (دووبارەکان لادەبات)
+
+# زیادکردن
+numbers.add(6)
+
+# سڕینەوە
+numbers.remove(3)
+
+print(numbers) # {1, 2, 4, 5, 6}
+
+# کردارەکان
+set1 = {1, 2, 3}
+set2 = {3, 4, 5}
+print(set1 | set2) # یەکگرتن {1, 2, 3, 4, 5}
+print(set1 & set2) # هاوبەش {3}
+</code></pre>
+            </section>
+            
+            <section id="topic-20" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">20. فانکشنەکان (Functions)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    بلۆکێک کۆدن کە تەنها کاتێک کاردەکەن کە بانگ بکرێن. بە <code>def</code> پێناسە دەکرێن.
+                </p>
+                <pre><code class="language-python"># پێناسەکردن
+def greet(name):
+    """ئەم فانکشنە سڵاو لە کەسێک دەکات."""
+    return f"سڵاو، {name}!"
+
+# بانگکردن
+message = greet("دانا")
+print(message) # "سڵاو، دانا!"
+
+# فانکشن بە بەهای بنەڕەتی
+def add(x, y=5):
+    return x + y
+
+print(add(10))     # 15 (y=5 بەکاردەهێنێت)
+print(add(10, 20)) # 30 (y=20 بەکاردەهێنێت)
+</code></pre>
+            </section>
+            
+            <section id="topic-21" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">21. ئۆبجێکتەکان (Objects)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    لە پایتۆندا، *هەموو شتێک* ئۆبجێکتە. ژمارەکان، ستริงەکان، لیستەکان، فانکشنەکان، ... هتد.
+                </p>
+                <p class="mb-4 text-lg leading-relaxed">
+                    ئۆبجێکت خاوەنی تایبەتمەندی (attributes) و مێتۆدە (methods).
+                </p>
+                <pre><code class="language-python">x = "سڵاو"
+y = 10
+
+# x ئۆبجێکتێکە لە جۆری str
+print(x.upper()) # .upper() مێتۆدێکە
+
+# y ئۆبجێکتێکە لە جۆری int
+# (intـەکان مێتۆدی زۆریان نییە، بەڵام هێشتا ئۆبجێکتن)
+
+print(type(x)) # <class 'str'>
+print(id(x))   # ناونیشانی بیرگە
+</code></pre>
+            </section>
+            
+            <section id="topic-22" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">22. بازنەکان (Loops)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    بەکاردێن بۆ دووبارە جێبەجێکردنی بلۆکێک کۆد.
+                </p>
+            </section>
+            
+            <section id="topic-22.1" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">22.1. بازنەی while</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    تا کاتێک مەرجێک ڕاست بێت (True)، کۆدەکە دووبارە دەکاتەوە.
+                </p>
+                <pre><code class="language-python">i = 1
+while i <= 5:
+    print(i)
+    i += 1
+# 1, 2, 3, 4, 5 چاپ دەکات
+</code></pre>
+            </section>
+            
+            <section id="topic-22.2" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">22.2. بازنەی for</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    بۆ سووڕانەوە بەناو ڕیزبەندییەکدا (لیست، تاپڵ، ستริง، ...) بەکاردێت.
+                </p>
+                <pre><code class="language-python">fruits = ["apple", "banana", "cherry"]
+for fruit in fruits:
+    print(fruit)
+# "apple", "banana", "cherry" چاپ دەکات
+
+# بەکارهێنانی range()
+for i in range(5):
+    print(i)
+# 0, 1, 2, 3, 4 چاپ دەکات
+</code></pre>
+            </section>
+            
+            <section id="topic-22.3" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">22.3. Break و Continue</h2>
+                <pre><code class="language-python"># break (بۆ وەستاندنی بازنەکە)
+for i in range(10):
+    if i == 5:
+        break
+    print(i)
+# 0, 1, 2, 3, 4 چاپ دەکات
+
+# continue (بۆ بازدان بەسەر ئەم سووڕەدا)
+for i in range(5):
+    if i == 2:
+        continue
+    print(i)
+# 0, 1, 3, 4 چاپ دەکات (2 بازدەدات)
+</code></pre>
+            </section>
+            
+            <section id="topic-23" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">23. کلاسەکان (Classes)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    کلاسەکان نەخشەن بۆ دروستکردنی ئۆبجێکت. بنچینەی پرۆگرامسازی ئۆبجێکت-ئاراستەن (OOP).
+                </p>
+                <pre><code class="language-python">class Car:
+    # Constructor (دروستکەر)
+    def __init__(self, brand, model, year):
+        self.brand = brand
+        self.model = model
+        self.year = year
+        self.is_running = False
+
+    # مێتۆد
+    def start_engine(self):
+        self.is_running = True
+        print(f"ئۆتۆمبێلی {self.brand} {self.model} دەستی بەکارکرد")
+
+    def stop_engine(self):
+        self.is_running = False
+        print("ئۆتۆمبێلەکە کوژایەوە")
+
+# دروستکردنی ئۆبجێکت (instance)
+my_car = Car("Toyota", "Camry", 2022)
+print(my_car.brand) # Toyota
+my_car.start_engine() # ئۆتۆمبێلی Toyota Camry دەستی بەکارکرد
+</code></pre>
+            </section>
+            
+            <section id="topic-24" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">24. مۆدیولەکان (Modules)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    مۆدیول فایلێکی پایتۆنە (<code>.py</code>) کە کۆد و فانکشنی تێدایە. دەتوانین بە <code>import</code> هاوردەی بکەین.
+                </p>
+                <p class="mb-2 text-lg">فایلی <code>mymodule.py</code>:</p>
+                <pre><code class="language-python">def say_hello(name):
+    print(f"سڵاو، {name}!")
+
+PI = 3.14
+</code></pre>
+                <p class="mb-2 mt-4 text-lg">فایلی <code>main.py</code> (لە هەمان فۆڵدەر):</p>
+                <pre><code class="language-python">import mymodule
+
+mymodule.say_hello("ئالان") # سڵاو، ئالان!
+print(mymodule.PI) # 3.14
+
+# یان هاوردەکردنی تەنها بەشێک
+from mymodule import say_hello
+say_hello("هەوراز") # سڵاو، هەوراز!
+</code></pre>
+            </section>
+            
+            <section id="topic-25" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">25. کتێبخانەی ستانداردی پایتۆن</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    پایتۆن خاوەنی کتێبخانەیەکی ستانداردی زۆر دەوڵەمەندە (batteries included). پێویست بە دامەزراندنی دەرەکی ناکەن.
+                </p>
+                <pre><code class="language-python"># مۆدیولی math بۆ کردارە بیرکارییەکان
+import math
+print(math.sqrt(16)) # 4.0
+print(math.pi)       # 3.14159...
+
+# مۆدیولی datetime بۆ کارکردن لەگەڵ کات
+import datetime
+now = datetime.datetime.now()
+print(now)
+
+# مۆدیولی json بۆ کارکردن لەگەڵ داتای JSON
+import json
+data = '{"name": "test", "age": 5}'
+parsed = json.loads(data)
+print(parsed["name"]) # "test"
+
+# مۆدیولی os بۆ کارکردن لەگەڵ سیستەمی کارپێکردن
+import os
+print(os.getcwd()) # شوێنی ئێستای فایلەکە
+</code></pre>
+            </section>
+            
+            <section id="topic-26" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">26. ڕێبەری ستایلی PEP8</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    PEP8 ڕێبەری فەرمی ستایلی کۆدنووسینی پایتۆنە. یارمەتیدەرە بۆ نووسینی کۆدی پاک و خوێنەرەوە.
+                </p>
+                <ul class="list-disc list-inside mb-4 text-lg leading-relaxed space-y-2">
+                    <li><b>بۆشایی (Indentation):</b> 4 سپەیس بەکاربهێنە.</li>
+                    <li><b>درێژی دێڕ:</b> نابێت لە 79 پیت زیاتر بێت.</li>
+                    <li><b>ناوی گۆڕاو و فانکشن:</b> <code>snake_case</code> (بۆ نموونە: <code>user_name</code>).</li>
+                    <li><b>ناوی کلاس:</b> <code>CapWords</code> (بۆ نموونە: <code>MyClass</code>).</li>
+                    <li><b>کۆمێنت:</b> دەبێت ڕوون و پوخت بن.</li>
+                </ul>
+            </section>
+            
+            <section id="topic-27" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">27. هەڵەدۆزینەوە (Debugging)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    پرۆسەی دۆزینەوە و چاککردنی هەڵەیە لە کۆدەکانتدا.
+                </p>
+                <ul class="list-disc list-inside mb-4 text-lg leading-relaxed space-y-2">
+                    <li><b><code>print()</code>:</b> سادەترین ڕێگە. بەکارهێنانی <code>print()</code> بۆ پشکنینی بەهای گۆڕاوەکان لە قۆناغە جیاوازەکاندا.</li>
+                    <li><b><code>try...except</code>:</b> بەکارهێنانی بلۆکی <code>try</code> بۆ گرتنی هەڵەکان (Exceptions).</li>
+                    <li><b>Debugger:</b> بەکارهێنانی ئامرازێکی debugger (وەک ئەوەی لە VS Code, PyCharm هەیە) کە ڕێگەت پێدەدات کۆد دێڕ بە دێڕ جێبەجێ بکەیت.</li>
+                </ul>
+            </section>
+            
+            <section id="topic-28" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">28. مەودای گۆڕاوەکان (Variables scope)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    دیاری دەکات کە گۆڕاوێک لە کوێی کۆدەکەدا بەردەستە و دەتوانرێت دەستکاری بکرێت.
+                </p>
+                <ul class="list-disc list-inside mb-4 text-lg leading-relaxed space-y-2">
+                    <li><b>Local Scope:</b> گۆڕاوێک لەناو فانکشنێکدا پێناسە دەکرێت، تەنها لەناو ئەو فانکشنەدا بەردەستە.</li>
+                    <li><b>Global Scope:</b> گۆڕاوێک لە دەرەوەی هەموو فانکشنەکان پێناسە دەکرێت، لە هەموو شوێنێک بەردەستە.</li>
+                </ul>
+                <pre><code class="language-python">x = 10  # Global scope
+
+def my_func():
+    y = 5  # Local scope
+    print(x) # دەتوانێت xـی Global بخوێنێتەوە
+    print(y)
+
+my_func()
+# 10
+# 5
+
+print(x) # 10
+# print(y) # Error: y is not defined
+</code></pre>
+            </section>
+            
+            <section id="topic-29" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">29. وەرگرتنی ئارگیومێنت لە command line</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    دەتوانیت لە کاتی جێبەجێکردنی فایلێکی پایتۆن لە تێرمیناڵ، داتای بۆ بنێریت. ئەمە بە مۆدیولی <code>sys</code> دەکرێت.
+                </p>
+                <p class="mb-2 text-lg">فایلی <code>cli_app.py</code>:</p>
+                <pre><code class="language-python">import sys
+
+# sys.argv لیستێکە
+# sys.argv[0] هەمیشە ناوی فایلەکەیە
+# sys.argv[1] یەکەم ئارگیومێنتە
+
+print(f"ناوی فایل: {sys.argv[0]}")
+print(f"یەکەم ئارگیومێنت: {sys.argv[1]}")
+</code></pre>
+                <p class="mb-2 mt-4 text-lg">لە تێرمیناڵ:</p>
+                <pre><code class="language-bash">python cli_app.py "Hello"
+# ئەنجام:
+# ناوی فایل: cli_app.py
+# یەکەم ئارگیومێنت: Hello
+</code></pre>
+            </section>
+            
+            <section id="topic-30" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">30. لامبدا فانکشن (Lambda Functions)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    فانکشنێکی بچووک و بێ-ناوە (anonymous). تەنها دەتوانێت یەک دەربڕینی (expression) هەبێت.
+                </p>
+                <pre><code class="language-python"># فانکشنی ئاسایی
+def double(x):
+    return x * 2
+
+# فانکشنی لامبدا
+double_lambda = lambda x: x * 2
+
+print(double(5))       # 10
+print(double_lambda(5)) # 10
+
+# زۆر بەکاردێت لەگەڵ map() و filter()
+numbers = [1, 2, 3, 4]
+squared = list(map(lambda x: x * x, numbers))
+print(squared) # [1, 4, 9, 16]
+</code></pre>
+            </section>
+            
+            <section id="topic-31" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">31. Recursion</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    کاتێک ڕوودەدات کە فانکشنێک خۆی بانگ بکاتەوە. پێویستی بە مەرجی وەستان (base case) هەیە بۆ ئەوەی نەکەوێتە بازنەی بێ کۆتا.
+                </p>
+                <pre><code class="language-python"># نموونەی فاکتۆریال (5! = 5*4*3*2*1)
+def factorial(n):
+    # Base case (مەرجی وەستان)
+    if n == 1:
+        return 1
+    # Recursive case (بانگکردنەوەی خۆی)
+    else:
+        return n * factorial(n - 1)
+
+print(factorial(5)) # 120
+</code></pre>
+            </section>
+            
+            <section id="topic-32" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">32. Nested Functions</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    پێناسەکردنی فانکشنێک لەناو فانکشنێکی تردا.
+                </p>
+                <pre><code class="language-python">def outer_func():
+    print("من فانکشنی دەرەوەم")
+
+    def inner_func():
+        print("من فانکشنی ناوەوەم")
+
+    # بانگکردنی فانکشنی ناوەوە
+    inner_func()
+
+outer_func()
+# ئەنجام:
+# من فانکشنی دەرەوەم
+# من فانکشنی ناوەوەم
+</code></pre>
+            </section>
+            
+            <section id="topic-33" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">33. Closures</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    Closure فانکشنێکی ناوەکییە (nested) کە دەتوانێت دەستی بگات بە گۆڕاوەکانی فانکشنی دەرەوەی خۆی، تەنانەت دوای ئەوەی فانکشنی دەرەوە جێبەجێکردنی تەواو بووە.
+                </p>
+                <pre><code class="language-python">def outer_func(x):
+    def inner_func(y):
+        # x لە scopeـی دەرەوە وەردەگرێت
+        return x + y
+    
+    # فانکشنی ناوەوە دەگەڕێنێتەوە
+    return inner_func
+
+# add_five ئێستا closureـێکە کە x=5ـی تێدا هەڵگیراوە
+add_five = outer_func(5)
+
+# کاتێک بانگی دەکەین، 5 (x) + 10 (y)
+print(add_five(10)) # 15
+</code></pre>
+            </section>
+            
+            <section id="topic-34" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">34. Decorators</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    Decoratorـەکان ڕێگەیەکن بۆ گۆڕینی یان زیادکردنی کرداری نوێ بۆ فانکشنەکان، بەبێ دەستکاریکردنی کۆدی فانکشنە ئەسڵییەکە.
+                </p>
+                <pre><code class="language-python">def my_decorator(func):
+    def wrapper():
+        print("شتێک پێش بانگکردنی فانکشنەکە")
+        func()
+        print("شتێک دوای بانگکردنی فانکشنەکە")
+    return wrapper
+
+@my_decorator
+def say_whee():
+    print("Whee!")
+
+say_whee()
+# ئەنجام:
+# شتێک پێش بانگکردنی فانکشنەکە
+# Whee!
+# شتێک دوای بانگکردنی فانکشنەکە
+</code></pre>
+            </section>
+            
+            <section id="topic-35" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">35. Docstrings</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    Docstring ستริงێکە کە وەک یەکەم دێڕ لەناو مۆدیول، کلاس، یان فانکشن دێت. بۆ ڕوونکردنەوەی کاری ئەو بلۆکە بەکاردێت. بە <code>""" """</code> دەنووسرێت.
+                </p>
+                <pre><code class="language-python">def add(x, y):
+    """
+    ئەم فانکشنە دوو ژمارە کۆدەکاتەوە و ئەنجامەکەی دەگەڕێنێتەوە.
+
+    Args:
+        x (int): ژمارەی یەکەم
+        y (int): ژمارەی دووەم
+
+    Returns:
+        int: ئەنجامی کۆکردنەوە
+    """
+    return x + y
+
+# دەتوانیت بە help() بیبینیت
+help(add)
+</code></pre>
+            </section>
+            
+            <section id="topic-36" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">36. Introspection</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    توانای پشکنینی ئۆبجێکتەکانە لە کاتی جێبەجێکردندا (runtime) بۆ زانینی جۆر، تایبەتمەندی، و مێتۆدەکانی.
+                </p>
+                <pre><code class="language-python">my_list = [1, 2]
+
+# زانینی جۆر
+print(type(my_list)) # <class 'list'>
+
+# زانینی مێتۆد و تایبەتمەندییەکان
+print(dir(my_list))
+# ['__add__', '__class__', ..., 'append', 'clear', 'copy', ...]
+
+# پشکنینی هەبوونی تایبەتمەندی
+print(hasattr(my_list, "append")) # True
+
+# وەرگرتنی تایبەتمەندی
+print(getattr(my_list, "count")) # <built-in method count>
+</code></pre>
+            </section>
+            
+            <section id="topic-37" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">37. Annotations (Type Hints)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    ڕێگەیەکە بۆ ئاماژەکردن بە جۆری چاوەڕوانکراوی گۆڕاوەکان و بەهای گەڕاوەی فانکشنەکان. پایتۆن *ناچاریان ناکات* (enforce)، بەڵام یارمەتیدەرن بۆ خوێندنەوەی کۆد و دۆزینەوەی هەڵە.
+                </p>
+                <pre><code class="language-python">def greet(name: str) -> str:
+    return "Hello " + name
+
+def add(x: int, y: int) -> int:
+    return x + y
+
+# ئەمە هێشتا کاردەکات، بەڵام ئامرازەکانی پشکنین (mypy) هەڵەی پێدەدەن
+greet(10) # لە ڕووی تەکنیکییەوە کاردەکات بەڵام دژی type hintـەکەیە
+</code></pre>
+            </section>
+            
+            <section id="topic-38" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">38. هەڵەکان (Exceptions)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    هەڵەکان (Exceptions) ڕووداوێکن کە لە کاتی جێبەجێکردندا ڕوودەدەن و ڕەوتی ئاسایی پرۆگرامەکە تێکدەدەن. بە <code>try...except</code> مامەڵەیان لەگەڵ دەکرێت.
+                </p>
+                <pre><code class="language-python">try:
+    x = 10 / 0  # ZeroDivisionError
+except ZeroDivisionError:
+    print("هەڵە: دابەشکردن بەسەر سفردا!")
+except TypeError:
+    print("هەڵە: جۆری داتا گونجاو نییە!")
+else:
+    print("هیچ هەڵەیەک ڕووینەدا")
+finally:
+    print("ئەم بلۆکە هەمیشە جێبەجێ دەبێت")
+
+# دروستکردنی هەڵە (Raising)
+x = -1
+if x < 0:
+    raise Exception("نابێت ژمارەکە نێگەتیڤ بێت")
+</code></pre>
+            </section>
+            
+            <section id="topic-39" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">39. ستەیتمێنتی with</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    بەکاردێت بۆ سادەکردنەوەی بەڕێوەبردنی سەرچاوەکان (وەک فایلەکان). دڵنیادەبێتەوە کە سەرچاوەکە بە دروستی دادەخرێت، تەنانەت ئەگەر هەڵەیەکیش ڕووبدات.
+                </p>
+                <pre><code class="language-python"># شێوازی کۆن (پێویستە .close() بکەیت)
+# f = open("myfile.txt", "w")
+# f.write("Hello")
+# f.close()
+
+# شێوازی نوێ (باشتر)
+# فایلەکە خۆکارانە دادەخرێت
+with open("myfile.txt", "w", encoding="utf-8") as f:
+    f.write("سڵاو جیهان")
+
+# لێرەدا فایلەکە داخراوە
+</code></pre>
+            </section>
+            
+            <section id="topic-40" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">40. دامەزراندنی پاکێجی دەرەکی بە pip</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    <code>pip</code> ئامرازی بەڕێوەبردنی پاکێجەکانی پایتۆنە. بەکاردێت بۆ دامەزراندن و بەڕێوەبردنی کتێبخانەی دەرەکی.
+                </p>
+                <p class="mb-2 text-lg">لە تێرمیناڵ:</p>
+                <pre><code class="language-bash"># دامەزراندنی پاکێج (بۆ نموونە requests)
+pip install requests
+
+# سڕینەوەی پاکێج
+pip uninstall requests
+
+# پیشاندانی پاکێجە دامەزراوەکان
+pip list
+
+# پاشەکەوتکردنی پاکێجەکان لە فایلێک
+pip freeze > requirements.txt
+
+# دامەزراندنی پاکێجەکان لە فایلێکەوە
+pip install -r requirements.txt
+</code></pre>
+            </section>
+            
+            <section id="topic-41" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">41. List comprehensions</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    ڕێگەیەکی کورت و پوختە بۆ دروستکردنی لیست لەسەر بنەمای لیستێکی تر.
+                </p>
+                <pre><code class="language-python"># شێوازی ئاسایی
+squares = []
+for x in range(10):
+    squares.append(x * x)
+print(squares)
+# [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+
+
+# شێوازی List Comprehension
+squares = [x * x for x in range(10)]
+print(squares)
+# [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+
+# لەگەڵ مەرج
+even_squares = [x * x for x in range(10) if x % 2 == 0]
+print(even_squares) # [0, 4, 16, 36, 64]
+</code></pre>
+            </section>
+            
+            <section id="topic-42" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">42. Polymorphism (فرە-شێوەیی)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    واتای "چەندین شێوە". لە پرۆگرامسازیدا، واتە توانای بەکارهێنانی یەک ناوی فانکشن (یان کردار) بۆ چەندین جۆری داتا.
+                </p>
+                <pre><code class="language-python"># فانکشنی len() نموونەی polymorphismـە
+print(len("سڵاو"))    # 5 (بۆ ستริง)
+print(len([1, 2, 3])) # 3 (بۆ لیست)
+print(len({"a": 1, "b": 2})) # 2 (بۆ فەرهەنگ)
+
+# هەمان فانکشن (len) بۆ چەندین جۆر (type) کاردەکات
+</code></pre>
+            </section>
+            
+            <section id="topic-43" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">43. Operator Overloading</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    توانای پێناسەکردنی ئەوەی کە کردارەکان (وەک <code>+</code>, <code>-</code>, <code>*</code>) چۆن کار لەسەر ئۆبجێکتەکانی کلاسەکەی تۆ بکەن.
+                </p>
+                <pre><code class="language-python">class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    # پێناسەکردنی '+' بۆ ئەم کلاسە
+    def __add__(self, other):
+        return Point(self.x + other.x, self.y + other.y)
+
+    def __str__(self):
+        return f"({self.x}, {self.y})"
+
+p1 = Point(1, 2)
+p2 = Point(3, 4)
+
+p3 = p1 + p2  # لێرەدا __add__ بانگ دەکرێت
+print(p3) # (4, 6)
+</code></pre>
+            </section>
+            
+            <section id="topic-44" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-5">44. ژینگەی خەیاڵی (Virtual Environments)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    ڕێگەیەکە بۆ دروستکردنی ژینگەیەکی دابڕاو بۆ هەر پڕۆژەیەک، بۆ ئەوەی پاکێج و وەشانەکانیان تێکەڵ نەبن.
+                </p>
+                <p class="mb-2 text-lg">لە تێرمیناڵ:</p>
+                <pre><code class="language-bash"># 1. دروستکردنی ژینگەی خەیاڵی (بۆ نموونە بە ناوی venv)
+python -m venv venv
+
+# 2. چالاککردنی ژینگەکە
+# لەسەر ویندۆز
+.\venv\Scripts\activate
+
+# لەسەر ماک/لینوکس
+source venv/bin/activate
+
+# ئێستا هەر پاکێجێک بە pip دایبمەزرێنیت، تەنها لەناو
+# ئەم ژینگەیەدا دادەمەزرێت.
+
+# 3. ناچالاککردن (کاتێک کارەکانت تەواو بوو)
+deactivate
+</code></pre>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.getElementById('sidebar');
+            const menuToggle = document.getElementById('menu-toggle');
+            const mainContent = document.getElementById('main-content');
+            const links = document.querySelectorAll('.sidebar-link');
+            const contentSections = document.querySelectorAll('.content-section');
+
+            // کردنەوە و داخستنی سایبار لە مۆبایلدا
+            menuToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('translate-x-full');
+            });
+
+            // گۆڕینی وانەکان
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // لابردنی کلاسی چالاک لە هەموو لینکەکان
+                    links.forEach(l => l.classList.remove('active-link', 'bg-gray-700'));
+                    
+                    // زیادکردنی کلاسی چالاک بۆ لینکی کرتە لێکراو
+                    this.classList.add('active-link', 'bg-gray-700');
+                    
+                    const topicId = this.getAttribute('data-topic');
+                    
+                    // شاردنەوەی هەموو بەشەکانی ناوەڕۆک
+                    contentSections.forEach(section => {
+                        section.classList.add('hidden');
+                    });
+                    
+                    // پیشاندانی بەشی ناوەڕۆکی خوازراو
+                    const activeSection = document.getElementById(topicId);
+                    if (activeSection) {
+                        activeSection.classList.remove('hidden');
+                    }
+                    
+                    // داخستنی سایبار لە مۆبایلدا دوای هەڵبژاردنی وانەیەک
+                    if (window.innerWidth < 1024) {
+                        sidebar.classList.add('translate-x-full');
+                    }
+                    
+                    // سکڕۆڵکردن بۆ سەرەوەی لاپەڕەکە
+                    window.scrollTo(0, 0);
+                });
+            });
+            
+            // ستایلی تایبەت بۆ لینکی چالاک
+            const style = document.createElement('style');
+            style.innerHTML = `
+                .sidebar-link {
+                    display: block;
+                    padding: 0.75rem 1.25rem; /* p-3 pr-5 */
+                    border-right: 4px solid transparent;
+                    transition: all 0.3s ease;
+                }
+                .sidebar-link:hover {
+                    background-color: #4a5568; /* bg-gray-700 */
+                }
+                .sidebar-link.active-link {
+                    background-color: #2d3748; /* bg-gray-800 */
+                    border-right-color: #4299e1; /* border-blue-500 */
+                    font-weight: 600; /* font-semibold */
+                }
+            `;
+            document.head.appendChild(style);
+
+            // چالاککردنی وانەی یەکەم بە شێوەی بنەڕەت
+            document.querySelector('.sidebar-link[data-topic="topic-1"]').classList.add('active-link', 'bg-gray-700');
+        });
+    </script>
+
+</body>
+</html>
